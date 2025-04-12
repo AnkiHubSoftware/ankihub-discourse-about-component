@@ -1,2 +1,16 @@
 example_setting:
   default: true
+
+bio_max_length:
+  type: integer
+  default: 150
+  description: Maximum character length for user bios on the about page
+  
+show_bio_for:
+  default: "admins,moderators"
+  type: enum
+  choices:
+    - admins
+    - moderators
+    - admins,moderators
+  description: Which user groups should display bios on the about page
