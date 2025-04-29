@@ -3,7 +3,7 @@ import { tracked } from "@glimmer/tracking";
 import CustomAboutPageUsers from "./custom-about-page-users";
 import { getOwner } from "@ember/application";
 
-export default class CustomAboutAfterModeratorsWrapper extends Component {
+export default class CustomAboutWrapper extends Component {
   @tracked detailedUsers = [];
 
   constructor() {
@@ -12,15 +12,17 @@ export default class CustomAboutAfterModeratorsWrapper extends Component {
   }
 
   async loadDetailedUserData() {
-    const moderators = this.args.outletArgs?.model?.moderators || [];
-    console.log("[Wrapper] Initial moderators:", moderators);
+    // Get users based on the outlet - check admins first, then moderators
+    const users = this.args.outletArgs?.model?.admins || 
+                 this.args.outletArgs?.model?.moderators || [];
+    console.log("[Wrapper] Initial users:", users);
     
     try {
       const store = getOwner(this).lookup("service:store");
       console.log("[Wrapper] Using store service to fetch user data");
       
       const detailedData = await Promise.all(
-        moderators.map(async (user) => {
+        users.map(async (user) => {
           console.log(`[Wrapper] Fetching detailed data for user: ${user.username}`);
           // Using store.find to get the user record with all attributes
           const userRecord = await store.find('user', user.username);
@@ -33,12 +35,14 @@ export default class CustomAboutAfterModeratorsWrapper extends Component {
       this.detailedUsers = detailedData;
     } catch (error) {
       console.error("[Wrapper] Error fetching detailed user data:", error);
-      this.detailedUsers = moderators; // Fallback to basic moderator data
+      this.detailedUsers = users; // Fallback to basic user data
     }
   }
 
   get users() {
-    const currentUsers = this.detailedUsers.length > 0 ? this.detailedUsers : (this.args.outletArgs?.model?.moderators || []);
+    const currentUsers = this.detailedUsers.length > 0 ? 
+      this.detailedUsers : 
+      (this.args.outletArgs?.model?.admins || this.args.outletArgs?.model?.moderators || []);
     console.log("[Wrapper] Current users being passed to CustomAboutPageUsers:", currentUsers);
     return currentUsers;
   }
