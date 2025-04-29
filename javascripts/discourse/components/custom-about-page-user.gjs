@@ -6,9 +6,11 @@ import { htmlSafe } from "@ember/template";
 
 const CustomAboutPageUser = <template>
   {{#let @user as |user|}}
-    {{log "Full user object:" user}}
-    {{log "Available user attributes:" (Object.keys user)}}
-    {{log "User object detailed properties:" (Object.entries user)}}
+    {{log "[User Component] Rendering user:" user.username}}
+    {{log "[User Component] Bio cooked status for " user.username ":" (if user.bio_cooked "Present" "Not present")}}
+    {{#if user.bio_cooked}}
+      {{log "[User Component] Bio content for " user.username ":" user.bio_cooked}}
+    {{/if}}
   {{/let}}
   <div data-username={{@user.username}} class="user-info small">
     <div class="user-image">
