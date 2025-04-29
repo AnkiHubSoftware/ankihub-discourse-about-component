@@ -5,6 +5,11 @@ import { i18n } from "discourse-i18n";
 import { htmlSafe } from "@ember/template";
 
 const CustomAboutPageUser = <template>
+  {{#let @user as |user|}}
+    {{log "Full user object:" user}}
+    {{log "Available user attributes:" (Object.keys user)}}
+    {{log "User object detailed properties:" (Object.entries user)}}
+  {{/let}}
   <div data-username={{@user.username}} class="user-info small">
     <div class="user-image">
       <div class="user-image-inner">
