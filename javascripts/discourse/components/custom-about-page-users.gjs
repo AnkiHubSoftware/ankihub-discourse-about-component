@@ -52,14 +52,14 @@ export default class CustomAboutPageUsers extends Component {
   }
 
   <template>
-    <div class="about-page-users-list">
+    <div class="custom-about-page-users-list">
       {{#each this.users as |user|}}
         <CustomAboutPageUser @user={{user}} />
       {{/each}}
     </div>
     {{#if this.showViewMoreButton}}
       <DButton
-        class="btn-flat about-page-users-list__expand-button"
+        class="btn-flat custom-about-page-users-list__expand-button"
         @action={{this.toggleExpanded}}
         @icon={{if this.expanded "chevron-up" "chevron-down"}}
         @translatedLabel={{if
