@@ -1,11 +1,190 @@
-.about__admins {
-  display: none;
+// Shared variables
+$user-list-spacing: 2em;
+$section-margin: 3em;
+$card-padding: 1.5em;
+$primary-color: #333;
+$secondary-color: #666;
+$text-color: #555;
+
+// Common styles for about page sections
+.about-page-section {
+  margin-bottom: $section-margin;
+  text-align: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1em;
+
+  h3 {
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+    color: $primary-color;
+    font-weight: 600;
+  }
+
+  p {
+    color: $text-color;
+    font-size: 1.1em;
+    margin-bottom: 2em;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
+// User list component styles
+.custom-about-page-users-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $user-list-spacing;
+  margin: 2em 0;
+}
+
+.custom-about-page-user {
+  padding: $card-padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .user-avatar {
+    margin-bottom: 0.5em;
+    
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5em;
+  }
+
+  .username {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin: 0;
+    color: $primary-color;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--primary-high);
+      }
+    }
+  }
+
+  .user-title {
+    color: $secondary-color;
+    font-size: 1em;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .user-bio {
+    color: $text-color;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 0.5em 0;
+    max-width: 280px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .user-social-links {
+    display: flex;
+    gap: 1em;
+    margin-top: 0.5em;
+
+    .social-link {
+      color: $secondary-color;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: var(--primary-high);
+      }
+
+      .d-icon {
+        width: 1.2em;
+        height: 1.2em;
+      }
+    }
+  }
+}
+
+.custom-about-page-users-list__expand-button {
+  background: transparent;
+  border: 2px solid var(--primary-low);
+  color: var(--primary-high);
+  font-weight: 500;
+  padding: 0.6em 2em;
+  border-radius: 30px;
+  margin: 2em auto 0;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--primary-very-low);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .d-icon {
+    margin-left: 0.5em;
+  }
+}
+
+// Admin section specific styles
+.admins-section {
+  .username {
+    color: var(--primary-high);
+    font-weight: bold;
+  }
+}
+
+// Moderator section specific styles
+.moderators-section {
+  .username {
+    color: var(--primary-high);
+  }
+}
+
+// Hide default Discourse sections since we're replacing them
+.about__admins,
 .about__moderators {
   display: none;
 }
 
-.username {
-  color: teal;
+// Section specific styles
+.admins-section,
+.moderators-section {
+  position: relative;
+  padding: 3em 0;
+  
+  &:not(:last-child) {
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      max-width: 800px;
+      height: 1px;
+      background: var(--primary-low);
+      margin: 3em auto 0;
+    }
+  }
 }
