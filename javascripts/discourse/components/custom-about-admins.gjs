@@ -44,7 +44,12 @@ export default class CustomAboutAdmins extends Component {
           console.log(`[AdminWrapper] Fetching detailed data for admin: ${user.username}`);
           try {
             const userRecord = await store.find('user', user.username);
-            console.log(`[AdminWrapper] Received admin record for ${user.username}:`, userRecord);
+            console.log(`[AdminWrapper] Detailed admin data for ${user.username}:`, {
+              username: userRecord.username,
+              title: userRecord.title,
+              name: userRecord.name,
+              bio: userRecord.bio_excerpt
+            });
             return userRecord;
           } catch (error) {
             console.error(`[AdminWrapper] Error fetching data for ${user.username}:`, error);

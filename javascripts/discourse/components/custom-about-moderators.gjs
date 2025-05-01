@@ -44,7 +44,12 @@ export default class CustomAboutModerators extends Component {
           console.log(`[ModWrapper] Fetching detailed data for moderator: ${user.username}`);
           try {
             const userRecord = await store.find('user', user.username);
-            console.log(`[ModWrapper] Received moderator record for ${user.username}:`, userRecord);
+            console.log(`[ModWrapper] Detailed moderator data for ${user.username}:`, {
+              username: userRecord.username,
+              title: userRecord.title,
+              name: userRecord.name,
+              bio: userRecord.bio_excerpt
+            });
             return userRecord;
           } catch (error) {
             console.error(`[ModWrapper] Error fetching data for ${user.username}:`, error);

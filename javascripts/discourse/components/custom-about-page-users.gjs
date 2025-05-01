@@ -19,11 +19,19 @@ export default class CustomAboutPageUsers extends Component {
 
   get users() {
     let users = this.args.users || [];
-    console.log("[CustomAboutPageUsers] Raw users array:", users);
+    console.log("[CustomAboutPageUsers] Raw users array with titles:", users.map(user => ({
+      username: user.username,
+      title: user.title,
+      name: user.name
+    })));
     
     if (this.showViewMoreButton && !this.expanded) {
       users = users.slice(0, this.args.truncateAt);
-      console.log("[CustomAboutPageUsers] Truncated users array:", users);
+      console.log("[CustomAboutPageUsers] Truncated users array with titles:", users.map(user => ({
+        username: user.username,
+        title: user.title,
+        name: user.name
+      })));
     }
     
     console.log("[CustomAboutPageUsers] Final users array:", {
