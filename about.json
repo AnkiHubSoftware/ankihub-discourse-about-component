@@ -1,13 +1,20 @@
 {
   "name": "ankihub-discourse-component",
   "component": true,
+  "about_url": "https://github.com/yourusername/ankihub-discourse-component",
+  "license_url": "https://github.com/yourusername/ankihub-discourse-component/blob/main/LICENSE",
   "authors": "AnkiHub",
-  "about_url": "TODO: Put your theme's public repo or Meta topic URL here",
-  "license_url": "TODO: Put your theme's LICENSE URL here",
-  "learn_more": "TODO",
   "theme_version": "0.0.1",
-  "minimum_discourse_version": null,
+  "minimum_discourse_version": "3.1.0.beta1",
   "maximum_discourse_version": null,
-  "assets": {},
-  "modifiers": {}
+  "assets": {
+    "javascript": ["discourse/components/custom-about-page-user.gjs",
+                  "discourse/components/custom-about-page-users.gjs",
+                  "discourse/components/custom-about-admins.gjs",
+                  "discourse/components/custom-about-moderators.gjs",
+                  "discourse/initializers/custom-about-page.js"]
+  },
+  "modifiers": {
+    "svg_icons": ["fab-discourse", "globe"]
+  }
 }
