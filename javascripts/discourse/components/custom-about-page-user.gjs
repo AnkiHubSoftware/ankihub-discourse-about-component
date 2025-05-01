@@ -3,54 +3,53 @@ import { prioritizeNameInUx } from "discourse/lib/settings";
 import { userPath } from "discourse/lib/url";
 import { i18n } from "discourse-i18n";
 import { htmlSafe } from "@ember/template";
+import dIcon from "discourse/helpers/d-icon";
 
 const CustomAboutPageUser = <template>
-  {{#let @user as |user|}}
-    {{log "[User Component] Rendering user:" user.username}}
-    {{log "[User Component] Bio cooked status for " user.username ":" (if user.bio_cooked "Present" "Not present")}}
-    {{#if user.bio_cooked}}
-      {{log "[User Component] Bio content for " user.username ":" user.bio_cooked}}
-    {{/if}}
-  {{/let}}
-  <div data-username={{@user.username}} class="user-info small">
-    <div class="user-image">
-      <div class="user-image-inner">
-        <a
-          href={{userPath @user.username}}
-          data-user-card={{@user.username}}
-          aria-hidden="true"
-        >
-          {{avatar @user imageSize="large"}}
-        </a>
-      </div>
+  <div class="custom-about-page-user" data-username={{@user.username}}>
+    <div class="user-avatar">
+      <a
+        href={{userPath @user.username}}
+        data-user-card={{@user.username}}
+        aria-hidden="true"
+      >
+        {{avatar @user imageSize="huge"}}
+      </a>
     </div>
-    <div class="user-detail">
-      <div class="name-line">
+    
+    <div class="user-details">
+      <h4 class="username">
         <a
           href={{userPath @user.username}}
           data-user-card={{@user.username}}
           aria-label={{i18n "user.profile_possessive" username=@user.username}}
         >
-          <span class="username">
-            {{#if (prioritizeNameInUx @user.name)}}
-              {{@user.name}}
-            {{else}}
-              {{@user.username}}
-            {{/if}}
-          </span>
-          <span class="name">
-            {{#if (prioritizeNameInUx @user.name)}}
-              {{@user.username}}
-            {{else}}
-              {{@user.name}}
-            {{/if}}
-          </span>
+          {{#if (prioritizeNameInUx @user.name)}}
+            {{@user.name}}
+          {{else}}
+            {{@user.username}}
+          {{/if}}
         </a>
-      </div>
-      <div class="title">{{@user.title}}</div>
-      {{#if @user.bio_cooked}}
-        <div class="bio">{{htmlSafe @user.bio_cooked}}</div>
+      </h4>
+      
+      {{#if @user.title}}
+        <div class="user-title">{{@user.title}}</div>
       {{/if}}
+      
+      {{#if @user.bio_cooked}}
+        <div class="user-bio">{{htmlSafe @user.bio_cooked}}</div>
+      {{/if}}
+      
+      <div class="user-social-links">
+        <a href={{userPath @user.username}} class="social-link">
+          {{dIcon "fab-discourse"}}
+        </a>
+        {{#if @user.website}}
+          <a href={{@user.website}} target="_blank" rel="noopener noreferrer" class="social-link">
+            {{dIcon "globe"}}
+          </a>
+        {{/if}}
+      </div>
     </div>
   </div>
 </template>;
