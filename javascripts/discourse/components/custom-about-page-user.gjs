@@ -18,22 +18,24 @@ const CustomAboutPageUser = <template>
     </div>
     
     <div class="user-details">
-      <h4 class="username">
+      <div class="username">
         <a
           href={{userPath @user.username}}
           data-user-card={{@user.username}}
           aria-label={{i18n "user.profile_possessive" username=@user.username}}
         >
-          {{#if (prioritizeNameInUx @user.name)}}
-            {{@user.name}}
-          {{else}}
-            {{@user.username}}
-          {{/if}}
+          <span class="primary-name">{{@user.username}}</span>
         </a>
-      </h4>
-      
+      </div>
+
       {{#if @user.title}}
         <div class="user-title">{{@user.title}}</div>
+      {{/if}}
+
+      <div class="spacer"></div>
+
+      {{#if @user.name}}
+        <div class="secondary-name">{{@user.name}}</div>
       {{/if}}
       
       {{#if @user.bio_cooked}}
