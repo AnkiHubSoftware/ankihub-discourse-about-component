@@ -3,3 +3,5 @@ en:
     description: ''
     settings:
       example_setting: A description of a setting.
+  about:
+    bio_label: "About Me"
