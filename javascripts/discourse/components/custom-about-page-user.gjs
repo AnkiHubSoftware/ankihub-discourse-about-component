@@ -6,8 +6,8 @@ import { htmlSafe } from "@ember/template";
 import dIcon from "discourse/helpers/d-icon";
 
 const CustomAboutPageUser = <template>
-  <div class="custom-about-page-user" data-username={{@user.username}}>
-    <div class="user-avatar">
+  <div class="about-page-user" data-username={{@user.username}}>
+    <div class="avatar">
       <a
         href={{userPath @user.username}}
         data-user-card={{@user.username}}
