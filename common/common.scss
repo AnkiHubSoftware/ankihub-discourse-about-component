@@ -1,1 +1,15 @@
-// Theme's SCSS
+
+// Hide default Discourse sections since we're replacing them
+// Only hide the ones that are NOT our custom sections
+.about__admins:not(.custom-about-section),
+.about__moderators:not(.custom-about-section) {
+  display: none !important;
+}
+
+// Minimal styling for bio content (not in Discourse core)
+.user-bio {
+  font-size: 0.875em;
+  margin-top: 0.5em;
+  color: var(--primary-medium);
+}
+

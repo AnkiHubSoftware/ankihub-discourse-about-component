@@ -1,0 +1,85 @@
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import CustomAboutPageUsers from "./custom-about-page-users";
+import { getOwner } from "@ember/application";
+import { i18n } from "discourse-i18n";
+
+export default class CustomAboutModerators extends Component {
+  @tracked detailedModerators = [];
+  @tracked isLoading = false;
+
+  constructor() {
+    super(...arguments);
+    this.loadDetailedUserData();
+  }
+
+  willDestroy() {
+    super.willDestroy();
+    // Ensure we clean up any pending operations
+    this.isLoading = false;
+  }
+
+  async loadDetailedUserData() {
+    if (this.isLoading) {
+      return;
+    }
+
+    const moderators = this.args.outletArgs?.model?.moderators || [];
+    if (!moderators.length) {
+      return;
+    }
+
+    this.isLoading = true;
+    
+    try {
+      const store = getOwner(this).lookup("service:store");
+      
+      const detailedModData = await Promise.all(
+        moderators.map(async (user) => {
+          if (!this.isLoading) {
+            // If component is being destroyed, abort
+            return user;
+          }
+          try {
+            const userRecord = await store.find('user', user.username);
+            return userRecord;
+          } catch (error) {
+            console.error(`[ModWrapper] Error fetching data for ${user.username}:`, error);
+            return user;
+          }
+        })
+      );
+
+      if (this.isLoading) {
+        this.detailedModerators = detailedModData;
+      }
+    } catch (error) {
+      console.error("[ModWrapper] Error fetching detailed user data:", error);
+      this.detailedModerators = moderators;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  get moderators() {
+    return this.detailedModerators.length > 0 ? 
+      this.detailedModerators : 
+      (this.args.outletArgs?.model?.moderators || []);
+  }
+
+  get truncateAt() {
+    return 6;
+  }
+
+  <template>
+    {{#if this.moderators.length}}
+      <section class="about__moderators custom-about-section">
+        <h3>{{i18n "about.our_moderators"}}</h3>
+        <CustomAboutPageUsers
+          @users={{this.moderators}}
+          @truncateAt={{this.truncateAt}}
+        />
+      </section>
+    {{/if}}
+  </template>
+} 
