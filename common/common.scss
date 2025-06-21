@@ -6,36 +6,8 @@ $primary-color: var(--primary);
 $secondary-color: var(--secondary);
 $text-color: var(--primary);
 
-// Common styles for about page sections
-.about-page-section {
-  margin-bottom: $section-margin;
-  text-align: center;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1em;
-
-  h3 {
-    font-size: 2.5em;
-    margin-bottom: 0.3em;
-    color: var(--primary);
-    font-weight: 600;
-    transform: translateX(25px);
-    font-family: "Inter", sans-serif;
-  }
-
-  p {
-    color: $text-color;
-    font-size: 1.1em;
-    margin-bottom: 2em;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-// User list component styles
-.custom-about-page-users-list {
+// User list component styles for canonical about-page-users-list
+.about-page-users-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: $user-list-spacing;
@@ -53,7 +25,8 @@ $text-color: var(--primary);
   }
 }
 
-.custom-about-page-user {
+// Style canonical user-info components
+.user-info.small {
   padding: $card-padding;
   display: flex;
   flex-direction: column;
@@ -69,108 +42,84 @@ $text-color: var(--primary);
     transform: translateY(-5px);
   }
 
-  .user-avatar {
+  .user-image {
     margin-bottom: 0.5em;
     
-    img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .user-image-inner {
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 
-  .user-details {
+  .user-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 0.4em;
     width: 100%;
-  }
 
-  .username {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin: 0;
-    color: var(--primary);
-    margin-bottom: -0.25em;
-    font-family: "Inter", sans-serif;
+    .name-line {
+      a {
+        color: inherit;
+        text-decoration: none;
+        
+        &:hover {
+          color: var(--primary-high);
+        }
+      }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-      
-      &:hover {
-        color: var(--primary-high);
+      .username {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin: 0;
+        color: var(--primary);
+        margin-bottom: -0.25em;
+        font-family: "Inter", sans-serif;
+        display: block;
+      }
+
+      .name {
+        font-size: 16px;
+        color: var(--primary-medium);
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: -0.3em;
+        font-family: "Inter", sans-serif;
+        display: block;
       }
     }
 
-    .primary-name {
-      font-size: 1em;
-      line-height: 1.2;
-      color: var(--primary);
-    }
-  }
-
-  .user-title {
-    color: var(--primary-medium);
-    font-size: 0.9em;
-    margin: 0;
-    font-weight: 700;
-    font-family: "Inter", sans-serif;
-  }
-
-  .spacer {
-    height: 0.6em;
-  }
-
-  .secondary-name {
-    font-size: 16px;
-    color: var(--primary-medium);
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: -0.3em;
-    font-family: "Inter", sans-serif;
-  }
-
-  .user-bio {
-    color: var(--primary);
-    font-size: 12px;
-    line-height: 1.4;
-    margin: 0.4em 0;
-    max-width: 280px;
-    font-family: "Inter", sans-serif;
-
-    p {
+    .title {
+      color: var(--primary-medium);
+      font-size: 0.9em;
       margin: 0;
-      color: var(--primary);
+      font-weight: 700;
+      font-family: "Inter", sans-serif;
     }
-  }
 
-  .user-social-links {
-    display: flex;
-    gap: 1em;
-    margin-top: 0.4em;
+    .user-bio {
+      color: var(--primary);
+      font-size: 12px;
+      line-height: 1.4;
+      margin: 0.4em 0;
+      max-width: 280px;
+      font-family: "Inter", sans-serif;
 
-    .social-link {
-      color: var(--tertiary-med-or-tertiary);
-      transition: color 0.2s ease;
-      
-      &:hover {
-        color: var(--primary-high);
-      }
-
-      .d-icon {
-        width: 1.1em;
-        height: 1.1em;
+      p {
+        margin: 0;
+        color: var(--primary);
       }
     }
   }
 }
 
-.custom-about-page-users-list__expand-button {
+.about-page-users-list__expand-button {
   background: transparent;
   border: 2px solid var(--primary-medium);
   color: var(--primary-medium);
@@ -195,30 +144,15 @@ $text-color: var(--primary);
   }
 }
 
-// Admin section specific styles
-.admins-section {
-  .username {
-    color: var(--primary-high);
-    font-weight: bold;
-  }
-}
-
-// Moderator section specific styles
-.moderators-section {
-  .username {
-    color: var(--primary-high);
-  }
-}
-
-// Hide default Discourse sections since we're replacing them
+// Section specific styles
 .about__admins,
 .about__moderators {
-  display: none;
-}
-
-// Section specific styles
-.admins-section,
-.moderators-section {
+  margin-bottom: $section-margin;
+  text-align: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1em;
   position: relative;
   padding: 3em 0;
   
@@ -233,4 +167,36 @@ $text-color: var(--primary);
       margin: 3em auto 0;
     }
   }
+
+  h3 {
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+    color: var(--primary);
+    font-weight: 600;
+    transform: translateX(25px);
+    font-family: "Inter", sans-serif;
+  }
+
+  // Admin section specific styles
+  &.about__admins {
+    .username {
+      color: var(--primary-high);
+      font-weight: bold;
+    }
+  }
+
+  // Moderator section specific styles  
+  &.about__moderators {
+    .username {
+      color: var(--primary-high);
+    }
+  }
 }
+
+// Hide default Discourse sections since we're replacing them
+// Only hide the ones that are NOT our custom sections
+.about__admins:not(.custom-about-section),
+.about__moderators:not(.custom-about-section) {
+  display: none !important;
+}
+

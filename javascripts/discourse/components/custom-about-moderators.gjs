@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import CustomAboutPageUsers from "./custom-about-page-users";
 import { getOwner } from "@ember/application";
-import { modifier } from 'ember-modifier';
+import { i18n } from "discourse-i18n";
 
 export default class CustomAboutModerators extends Component {
   @tracked detailedModerators = [];
@@ -33,7 +33,6 @@ export default class CustomAboutModerators extends Component {
     
     try {
       const store = getOwner(this).lookup("service:store");
-      console.log("[ModWrapper] Using store service to fetch user data");
       
       const detailedModData = await Promise.all(
         moderators.map(async (user) => {
@@ -41,15 +40,8 @@ export default class CustomAboutModerators extends Component {
             // If component is being destroyed, abort
             return user;
           }
-          console.log(`[ModWrapper] Fetching detailed data for moderator: ${user.username}`);
           try {
             const userRecord = await store.find('user', user.username);
-            console.log(`[ModWrapper] Detailed moderator data for ${user.username}:`, {
-              username: userRecord.username,
-              title: userRecord.title,
-              name: userRecord.name,
-              bio: userRecord.bio_excerpt
-            });
             return userRecord;
           } catch (error) {
             console.error(`[ModWrapper] Error fetching data for ${user.username}:`, error);
@@ -81,13 +73,13 @@ export default class CustomAboutModerators extends Component {
 
   <template>
     {{#if this.moderators.length}}
-      <div class="about-page-section moderators-section">
-        <h3>Moderators</h3>
+      <section class="about__moderators custom-about-section">
+        <h3>{{i18n "about.our_moderators"}}</h3>
         <CustomAboutPageUsers
           @users={{this.moderators}}
           @truncateAt={{this.truncateAt}}
         />
-      </div>
+      </section>
     {{/if}}
   </template>
 } 

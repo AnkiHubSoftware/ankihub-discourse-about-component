@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import CustomAboutPageUsers from "./custom-about-page-users";
 import { getOwner } from "@ember/application";
-import { modifier } from 'ember-modifier';
+import { i18n } from "discourse-i18n";
 
 export default class CustomAboutAdmins extends Component {
   @tracked detailedAdmins = [];
@@ -33,7 +33,6 @@ export default class CustomAboutAdmins extends Component {
     
     try {
       const store = getOwner(this).lookup("service:store");
-      console.log("[AdminWrapper] Using store service to fetch user data");
       
       const detailedAdminData = await Promise.all(
         admins.map(async (user) => {
@@ -41,15 +40,8 @@ export default class CustomAboutAdmins extends Component {
             // If component is being destroyed, abort
             return user;
           }
-          console.log(`[AdminWrapper] Fetching detailed data for admin: ${user.username}`);
           try {
             const userRecord = await store.find('user', user.username);
-            console.log(`[AdminWrapper] Detailed admin data for ${user.username}:`, {
-              username: userRecord.username,
-              title: userRecord.title,
-              name: userRecord.name,
-              bio: userRecord.bio_excerpt
-            });
             return userRecord;
           } catch (error) {
             console.error(`[AdminWrapper] Error fetching data for ${user.username}:`, error);
@@ -81,13 +73,13 @@ export default class CustomAboutAdmins extends Component {
 
   <template>
     {{#if this.admins.length}}
-      <div class="about-page-section admins-section">
-        <h3>Administrators</h3>
+      <section class="about__admins custom-about-section">
+        <h3>{{i18n "about.our_admins"}}</h3>
         <CustomAboutPageUsers
           @users={{this.admins}}
           @truncateAt={{this.truncateAt}}
         />
-      </div>
+      </section>
     {{/if}}
   </template>
 } 

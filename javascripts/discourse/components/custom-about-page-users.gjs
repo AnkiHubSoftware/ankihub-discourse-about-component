@@ -8,55 +8,24 @@ import { i18n } from "discourse-i18n";
 export default class CustomAboutPageUsers extends Component {
   @tracked expanded = false;
 
-  constructor() {
-    super(...arguments);
-    console.log("[CustomAboutPageUsers] Component initialized");
-    console.log("[CustomAboutPageUsers] Initial args:", {
-      users: this.args.users,
-      truncateAt: this.args.truncateAt
-    });
-  }
 
   get users() {
     let users = this.args.users || [];
-    console.log("[CustomAboutPageUsers] Raw users array with titles:", users.map(user => ({
-      username: user.username,
-      title: user.title,
-      name: user.name
-    })));
     
     if (this.showViewMoreButton && !this.expanded) {
       users = users.slice(0, this.args.truncateAt);
-      console.log("[CustomAboutPageUsers] Truncated users array with titles:", users.map(user => ({
-        username: user.username,
-        title: user.title,
-        name: user.name
-      })));
     }
-    
-    console.log("[CustomAboutPageUsers] Final users array:", {
-      length: users.length,
-      expanded: this.expanded,
-      showViewMore: this.showViewMoreButton
-    });
     
     return users;
   }
 
   get showViewMoreButton() {
-    const should = this.args.truncateAt > 0 && (this.args.users || []).length > this.args.truncateAt;
-    console.log("[CustomAboutPageUsers] Show view more button:", {
-      truncateAt: this.args.truncateAt,
-      totalUsers: (this.args.users || []).length,
-      shouldShow: should
-    });
-    return should;
+    return this.args.truncateAt > 0 && (this.args.users || []).length > this.args.truncateAt;
   }
 
   @action
   toggleExpanded() {
     this.expanded = !this.expanded;
-    console.log("[CustomAboutPageUsers] Toggled expanded state:", this.expanded);
   }
 
   <template>
